@@ -60,16 +60,14 @@ app.get("/scrape", function(req, res) {
     $(".cd__wrapper").each(function(i, element) {
 
 
-//   result = {}
-//   result.url = $(this).children(".cd_content)")
-// }
+
       var result = {};
 
-      result.link = $(this).children(".cd__content").children("h3").children("a").attr("href")
-      // result.title = $(this).find("h2").text().trim();
-      // result.summary = $(this).find("p.summary").text();
-      // result.image = $(this).find("a").find("img").attr("src");
-      // result.saved = false;
+      result.link = $(this).children(".cd__content").children("h3").children("a").attr("href");
+      result.title = $(this).children(".cd__content").children("h3").text().trim();
+      result.summary = $(this).find("p.summary").text();
+    
+      result.saved = false;
 
       console.log (result);
 
