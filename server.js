@@ -4,47 +4,35 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var hbs = require("handlebars");
 
-// Our scraping tools
-// Axios is a promised-based http library, similar to jQuery's Ajax method
-// It works on the client and on the server
+// Scraping tools
+
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-// Require all models
+// Require models
 var db = require("./models");
 
 // Initialize Express
 var app = express();
 
 // Configure middleware
-
-// Use morgan logger for logging requests
+// Morgan logger for logging requests
 app.use(logger("dev"));
+
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: false }));
+
 // Use express.static to serve the public folder as a static directory
 app.use(express.static(process.cwd() + "/public"));
 var exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-//Handlebars helper
-hbs.registerHelper('each_upto', function(ary, max, options) {
-  if(!ary || ary.length == 0)
-      return options.inverse(this);
-
-  var result = [ ];
-  for(var i = 0; i < max && i < ary.length; ++i)
-      result.push(options.fn(ary[i]));
-  return result.join('');
-});
 
 var PORT = process.env.PORT || 3000;
 mongoose.Promise = Promise;
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoScraper";
 mongoose.connect(MONGODB_URI);
-
-// Routes
 
 // Route for getting all saved Articles from the db
 app.get("/", function(req, res) {
@@ -64,19 +52,26 @@ app.get("/", function(req, res) {
 // A GET route for scraping  website
 app.get("/scrape", function(req, res) {
   var counter = 0;
-  axios.get("https://www.cnn.com/").then(function(response) {
+ 
+  axios.get("https://www.cnn.com/specials/us/energy-and-environment").then(function(response) {
 
     var $ = cheerio.load(response.data);
+   
+    $(".cd__wrapper").each(function(i, element) {
 
-    $("article.story").each(function(i, element) {
 
+//   result = {}
+//   result.url = $(this).children(".cd_content)")
+// }
       var result = {};
 
-      result.link = $(this).find("a").attr("href");
-      result.title = $(this).find("h2").text().trim();
-      result.summary = $(this).find("p.summary").text();
-      result.image = $(this).find("a").find("img").attr("src");
-      result.saved = false;
+      result.link = $(this).children(".cd__content").children("h3").children("a").attr("href")
+      // result.title = $(this).find("h2").text().trim();
+      // result.summary = $(this).find("p.summary").text();
+      // result.image = $(this).find("a").find("img").attr("src");
+      // result.saved = false;
+
+      console.log (result);
 
       if (result.title && result.link && result.summary) {
         counter++;
@@ -117,7 +112,7 @@ app.post("/unsave/:id", function(req, res) {
     });
 });
 
-//Route to render Articles to handlebars and populate with saved articles
+//Route to render articles to handlebars and populate with saved articles
 app.get("/saved", function(req, res) {
   db.Article
   .find({ saved: true })
@@ -161,6 +156,19 @@ app.post('/createNote/:id', function (req,res){
     });
 });
 
+app.get("/delete/:id", function (req, res) {
+  Note.remove({
+    "_id":req.params.id
+  }).exec(function (error, doc) {
+    if (error) {
+      console.log(error);
+    }
+    else {
+      console.log("note deleted");
+      res.redirect("/" );
+    }
+  });
+});
 // Start the server
 app.listen(PORT, function() {
   console.log("App running on port " + PORT + "!");
