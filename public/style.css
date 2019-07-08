@@ -6,9 +6,6 @@ body {
   background-color: gray;
   border-color: black;
 }
-.navbar-brand {
-  font-size: xx-large;
-}
 
 .top-buttons {
   float: right;
@@ -23,46 +20,9 @@ body {
   margin: 3% 5%;
 }
 
-.article img {
-  box-shadow: 5px 5px 12px rgb(78, 78, 78);
-}
-
 .article h2 {
   color: rgb(59, 59, 59);
   font-weight: bolder;
-}
-
-.article p {
-  color: navy;
-  font-weight: bold;
-}
-
-.load {
-  display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-}
-
-/*MODAL*/
-.modal-content {
-  background-color: grey;
-  background-repeat: no-repeat;
-  background-size: cover;
-  /* background-attachment: fixed; */
-  background-position: center 12%;
-  border-radius: 0;
-  /* font-family: 'Rock Salt', cursive; */
-  color: #777;
-
-}
-
-.modal-body {
-  padding-top: 0;
-  width: 80%;
-  margin: 0 auto;
 }
 
 .form {
@@ -75,13 +35,13 @@ body {
 }
 
 #titleinput {
-  margin-top: 1%;
+  margin-top: 3%;
 }
 
 #bodyinput {
-  margin-top: .5%;
+  margin-top: .7%;
 }
 
 #savenote {
-  margin-left: 45%;
+  margin-left: 55%;
 }

@@ -13,15 +13,14 @@
 <div class="articles">
     <div class="load"></div>
     {{#each articles }}
-        {{!-- {{#unless saved}}
+        {{#unless saved}}
         <div class="article">
-            <img src="{{image}}" style="height:100px;">
             <a href="{{link}}"><h2>{{title}}</h2></a>
             <p>{{summary}}</p>
             <button class="btn btn-primary save" data-id="{{_id}}">SAVE</button>
             <br>
         </div>
-        {{/unless}} --}}
+        {{/unless}}
     {{/each}}
 </div>
 

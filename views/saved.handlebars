@@ -14,7 +14,6 @@
     {{#each articles}}
         {{#if saved}}
         <div class="article">
-            <img src="{{image}}" style="height:100px;">
             <a href="{{link}}"><h2>{{title}}</h2></a>
             <p>{{summary}}</p>
             <button class="btn btn-primary unsave" data-id="{{_id}}">UNSAVE</button>
@@ -27,7 +26,6 @@
     {{/each}}
 </div>
 
- {{!-- modal for displaying and creating notes --}}
   <div id="noteModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
